@@ -18,6 +18,18 @@ steps:
     npm run build
   displayName: 'npm build'
   
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Visual Studio Premium with MSDN(581c2850-8085-49b3-87cb-867302365673)'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az artifacts universal download \
+      --organization "https://dev.azure.com/idr99/" \
+      --feed "idr99" \
+      --name "iis-sql-stack" \
+      --version "0.0.1" \
+      --path .
 - task: CopyFiles@2
   inputs:
     sourceFolder: '$(Build.SourcesDirectory)'
